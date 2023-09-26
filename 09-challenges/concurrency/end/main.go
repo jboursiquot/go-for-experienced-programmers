@@ -93,9 +93,10 @@ func doAnalysis(data string, counters ...counter) map[string]int {
 	for _, c := range counters {
 		go func(c counter) {
 			defer wg.Done()
+			count := c.count(data)
 			mu.Lock()
 			defer mu.Unlock()
-			analysis[c.name()] = c.count(data)
+			analysis[c.name()] = count
 		}(c)
 	}
 
