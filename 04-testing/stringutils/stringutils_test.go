@@ -37,6 +37,7 @@ func TestLower(t *testing.T) {
 
 	for name, tc := range tests {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			got := stringutils.Lower(tc.input)
 			if tc.want != got {
 				t.Fatalf("wanted %s but got %s", tc.want, got)
