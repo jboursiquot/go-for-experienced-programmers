@@ -8,7 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"github.com/jboursiquot/go-in-3-weeks/05-interfaces/e2/mypackage"
+	"github.com/jboursiquot/go-for-experienced-programmers/05-interfaces/e2/mypackage"
 )
 
 // Note how our testClient does not need to depend on the `mypackage.ddbClient` interface here.

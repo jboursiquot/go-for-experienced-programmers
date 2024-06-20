@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"github.com/jboursiquot/go-in-3-weeks/05-interfaces/e2/mypackage"
+	"github.com/jboursiquot/go-for-experienced-programmers/05-interfaces/e2/mypackage"
 )
 
 func main() {
