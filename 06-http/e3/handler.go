@@ -38,26 +38,19 @@ func newProverbsHandler() *proverbsHandler {
 }
 
 func (ph *proverbsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	switch r.Method {
-	case http.MethodGet:
-		id, err := strconv.Atoi(r.URL.Path[len("/proverbs/"):])
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			return
-		}
-
-		p, err := ph.lookup(id)
-		if err == errUnknownProverb {
-			http.Error(w, errUnknownProverb.Error(), http.StatusNotFound)
-			return
-		}
-
-		fmt.Fprintln(w, p.value)
-		return
-	default:
-		w.WriteHeader(http.StatusMethodNotAllowed)
+	id, err := strconv.Atoi(r.PathValue("id"))
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
+
+	p, err := ph.lookup(id)
+	if err == errUnknownProverb {
+		http.Error(w, errUnknownProverb.Error(), http.StatusNotFound)
+		return
+	}
+
+	fmt.Fprintln(w, p.value)
 }
 
 var errUnknownProverb = errors.New("Unknown Proverb")
