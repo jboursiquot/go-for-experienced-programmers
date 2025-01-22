@@ -1,8 +1,6 @@
 module github.com/jboursiquot/go-for-experienced-programmers
 
-go 1.22.1
-
-toolchain go1.22.4
+go 1.23.5
 
 require (
 	github.com/aws/aws-sdk-go v1.51.2
