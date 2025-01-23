@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"sync"
 	"time"
 	"unicode"
 
@@ -13,9 +14,17 @@ import (
 )
 
 var random *rand.Rand
+var randomMutex sync.Mutex
 
 func init() {
 	random = rand.New(rand.NewSource(time.Now().UnixNano()))
+}
+
+func getRandomDurationInSeconds(n int) time.Duration {
+	defer randomMutex.Unlock()
+
+	randomMutex.Lock()
+	return time.Duration(random.Intn(n)) * time.Second
 }
 
 type counter interface {
@@ -32,7 +41,7 @@ func (l letterCounter) name() string {
 func (l letterCounter) count(input string) int {
 	result := 0
 	fmt.Println(l.name(), "working...")
-	time.Sleep(time.Duration(random.Intn(5)) * time.Second)
+	time.Sleep(getRandomDurationInSeconds(5))
 	for _, char := range input {
 		if unicode.IsLetter(char) {
 			result++
@@ -50,7 +59,7 @@ func (n numberCounter) name() string {
 func (n numberCounter) count(input string) int {
 	result := 0
 	fmt.Println(n.name(), "working...")
-	time.Sleep(time.Duration(random.Intn(5)) * time.Second)
+	time.Sleep(getRandomDurationInSeconds(5))
 	for _, char := range input {
 		if unicode.IsNumber(char) {
 			result++
@@ -68,7 +77,7 @@ func (s symbolCounter) name() string {
 func (s symbolCounter) count(input string) int {
 	result := 0
 	fmt.Println(s.name(), "working...")
-	time.Sleep(time.Duration(random.Intn(5)) * time.Second)
+	time.Sleep(getRandomDurationInSeconds(5))
 	for _, char := range input {
 		if !unicode.IsLetter(char) && !unicode.IsNumber(char) {
 			result++
